@@ -1,33 +1,22 @@
-#!/usr/bin/env python3
-"""Funniest Sign on a Haunted Server Room Door.
+"""Haunted sign entry: write one funny line to /output/entry.txt."""
 
-Writes one sign line (1-120 chars) to /output/entry.txt.
-"""
+import os
 
-SIGN = "Do not unplug Rack 3. The ghost inside is the only one who remembers the root password."
-
-MAX_CHARS = 120
-OUTPUT_PATH = "/output/entry.txt"
+SETUP = "DO NOT ENTER. The ghost in aisle 3 has rebooted the server 47 times"
+TURN = "and it still will not stop beeping."
 
 
-def get_sign():
-    """Return the sign line, stripped of surrounding whitespace."""
-    return SIGN.strip()
+def build_sign():
+    return SETUP + " " + TURN
 
 
-def validate(text):
-    """Gate: the entry must be 1-120 non-blank characters."""
-    if not text or text.isspace():
-        raise ValueError("sign must not be blank")
-    if len(text) > MAX_CHARS:
-        raise ValueError(f"sign must be 1-120 chars, got {len(text)}")
-    return text
+SIGN = build_sign()
 
 
 def main():
-    text = validate(get_sign())
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        f.write(text + "\n")
+    os.makedirs("/output", exist_ok=True)
+    with open("/output/entry.txt", "w", encoding="utf-8") as f:
+        f.write(SIGN)
 
 
 if __name__ == "__main__":
